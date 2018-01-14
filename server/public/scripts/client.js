@@ -50,17 +50,19 @@ function addItem() {
 
 function deleteItem() {
     let thisId = $(this).closest('tr').data('id');
-    $.ajax({
-        type: 'DELETE',
-        url: '/list/' + thisId,
-        success: function(response) {
-            console.log(response);
-            getList();
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
+    if (confirm("Please confirm deletion.") === true) { 
+        $.ajax({
+            type: 'DELETE',
+            url: '/list/' + thisId,
+            success: function(response) {
+                console.log(response);
+                getList();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 }
 
 function getList() {
