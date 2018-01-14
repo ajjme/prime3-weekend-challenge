@@ -1,3 +1,39 @@
 #addForm {
     margin: 50px 0;
 }
+
+body {
+    font-family: 'Merriweather', serif;
+    background: #eeeeee;
+    margin: 0;
+}
+
+#wrap {
+    margin: 0 auto;
+    width: 800px;
+    background: #fff;
+    padding: 25px;
+}
+
+h1 {
+    color: #540D6E;
+}
+
+#addForm {
+    width: 100%;
+    background: #ccc;
+}
+
+table {
+    margin: 0;
+    width: 100%;
+}
+
+th {
+    margin: 0;
+    background: #FFD23F;
+}
+
+tr td:first-child {
+    text-align: right;
+}

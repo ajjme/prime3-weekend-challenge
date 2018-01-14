@@ -7,6 +7,24 @@ function start() {
 
     $('main').on('click', '.delete', deleteItem);
     $('#newButton').on('click', addItem);
+    $('main').on('click', '.checkbox', updateStatus);
+}
+
+function updateStatus() {
+    let id = $(this).closest('tr').data().id;
+    let status = $(this).is(':checked');
+    $.ajax({
+        type: 'PUT',
+        url: '/list/updateStatus',
+        data: { id: id, status: status },
+        success: function(response) {
+            console.log('successfully sent', response);
+            getList();
+        },
+        error: function(err) {
+            console.log('error', err);
+        }
+    });
 }
 
 function addItem() {
@@ -20,6 +38,7 @@ function addItem() {
             data: { content: content },
             success: function(response) {
                 console.log('successfully sent', response);
+                $('#newContent').val('');
                 getList();
             },
             error: function(err) {
@@ -27,7 +46,6 @@ function addItem() {
             }
         });
     }
-    console.log(newData);
 }
 
 function deleteItem() {
@@ -61,11 +79,10 @@ function getList() {
 
 function showList(list) {
     let newTable = $('<table id="todos">');
-    let header = $('<tr class="todo"><th>Status</th><th>Description</th><th>Actions</th></tr>');
+    let header = $('<tr class="todo"><th colspan="2">Description</th><th>Actions</th></tr>');
     newTable.append(header);
     for (let i = 0; i < list.length; i++) {
-        console.log(list[i].status);
-        let newRow = $(`<tr><td><input type="checkbox"${list[i].status === true ? ' checked' : ''}></input></td><td>${list[i].content}</td><td><button class="delete">Delete</button></td></tr>`);
+        let newRow = $(`<tr><td><input type="checkbox"${list[i].status === true ? ' checked' : ''} class="checkbox"></input></td><td>${list[i].content}</td><td><button class="delete">Delete</button></td></tr>`);
         newRow.data(list[i]);
         newTable.append(newRow);
     }
