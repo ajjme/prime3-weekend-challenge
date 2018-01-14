@@ -5,7 +5,29 @@ function start() {
 
     getList();
 
-   $('main').on('click', '.delete', deleteItem);
+    $('main').on('click', '.delete', deleteItem);
+    $('#newButton').on('click', addItem);
+}
+
+function addItem() {
+    let content = $('#newContent').val();
+    if (content === '') {
+        alert('Task can\'t be empty');
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: '/list',
+            data: { content: content },
+            success: function(response) {
+                console.log('successfully sent', response);
+                getList();
+            },
+            error: function(err) {
+                console.log('error', err);
+            }
+        });
+    }
+    console.log(newData);
 }
 
 function deleteItem() {
@@ -42,7 +64,8 @@ function showList(list) {
     let header = $('<tr class="todo"><th>Status</th><th>Description</th><th>Actions</th></tr>');
     newTable.append(header);
     for (let i = 0; i < list.length; i++) {
-        let newRow = $(`<tr><td>x</td><td>${list[i].content}</td><td><button class="delete">Delete</button></td></tr>`);
+        console.log(list[i].status);
+        let newRow = $(`<tr><td><input type="checkbox"${list[i].status === true ? ' checked' : ''}></input></td><td>${list[i].content}</td><td><button class="delete">Delete</button></td></tr>`);
         newRow.data(list[i]);
         newTable.append(newRow);
     }
