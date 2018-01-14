@@ -8,7 +8,7 @@ const mainRoute = require('./routes/main.route');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('server/public'));
 
-app.use('/main', mainRoute);
+app.use('/list', mainRoute);
 
 app.listen(port, () => {
     console.log('listening on', port);

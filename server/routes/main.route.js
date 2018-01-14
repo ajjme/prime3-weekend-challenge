@@ -3,7 +3,6 @@ const router = express.Router();
 const pool = require('../modules/pool.module');
 
 router.get('/', (req, res) => {
-    console.log('hit main route');
     const queryText = 'SELECT * FROM todos';
     pool.query(queryText)
         .then(result => {
